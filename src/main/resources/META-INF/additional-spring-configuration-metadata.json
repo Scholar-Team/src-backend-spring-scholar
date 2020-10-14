@@ -1,0 +1,37 @@
+{"properties": [
+  {
+    "name": "STORAGE_ID",
+    "type": "java.lang.String",
+    "description": "A description for 'STORAGE_ID'"
+  },
+  {
+    "name": "BASE_URL",
+    "type": "java.lang.String",
+    "description": "A description for 'BASE_URL'"
+  },
+  {
+    "name": "USERNAME",
+    "type": "java.lang.String",
+    "description": "A description for 'USERNAME'"
+  },
+  {
+    "name": "PASSWORD",
+    "type": "java.lang.String",
+    "description": "A description for 'PASSWORD'"
+  },
+  {
+    "name": "DATABASE_NAME",
+    "type": "java.lang.String",
+    "description": "A description for 'DATABASE_NAME'"
+  },
+  {
+    "name": "SERVER_PORT",
+    "type": "java.lang.String",
+    "description": "A description for 'SERVER_PORT'"
+  },
+  {
+    "name": "BUCKET",
+    "type": "java.lang.String",
+    "description": "A description for 'BUCKET'"
+  }
+]}
