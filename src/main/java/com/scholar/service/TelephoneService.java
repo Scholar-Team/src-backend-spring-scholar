@@ -13,11 +13,15 @@ import com.scholar.request.TelephoneRequest;
 public class TelephoneService extends BaseService<Telephone, TelephoneDTO, TelephoneRequest> {
 
 	private TelephoneRepository repository;
+	private TelephoneMapper mapper;
 	
 	@Autowired
-	public TelephoneService(TelephoneRepository repository, TelephoneMapper mapper) {
+	public TelephoneService(TelephoneRepository repository,
+			TelephoneMapper mapper) {
 		super(repository, mapper);
 		
 		this.repository = repository;
+		this.mapper = mapper;
 	}
+	
 }

@@ -24,6 +24,7 @@ import com.scholar.service.AdministratorService;
 public class AdministratorController implements AdministratorControllerOpenApi {
 	
 	private AdministratorService service;
+	
 	private BaseController<Administrator, 
 	AdministratorDTO, AdministratorRequest> base;
 	

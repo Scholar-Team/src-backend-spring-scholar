@@ -1,8 +1,10 @@
 package com.scholar.dto;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
-public class AdministratorDTO {
+@EqualsAndHashCode(callSuper = true)
+public class AdministratorDTO extends PersonDTO {
 
 }

@@ -2,7 +2,6 @@ package com.scholar.model;
 
 import java.net.URL;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,25 +18,16 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "file")
+@Table
 public class File {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column
 	private String name;
-	
-	@Column(name = "full_name")
 	private String fullName;
-	
-	@Column(name = "content_type")
 	private String contentType;
-	
-	@Column
 	private Long size;
-	
-	@Column
 	private URL url;
 }

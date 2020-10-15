@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.scholar.mapper.BaseMapper;
 
-public abstract class BaseService<M, D, R> {
+public abstract class BaseService<M, D, R> implements IBaseService<M, D, R> {
 
 	protected JpaRepository<M, Long> repository;
 	protected BaseMapper<M, D, R> mapper;

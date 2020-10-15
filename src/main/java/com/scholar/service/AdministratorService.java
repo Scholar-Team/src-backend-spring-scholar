@@ -1,6 +1,9 @@
 package com.scholar.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.Optional;
+
+import javax.transaction.Transactional;
+
 import org.springframework.stereotype.Service;
 
 import com.scholar.dto.AdministratorDTO;
@@ -14,11 +17,26 @@ public class AdministratorService
 	extends BaseService<Administrator, AdministratorDTO, AdministratorRequest> {
 
 	private AdministratorRepository repository;
+	private AdministratorMapper mapper;
 	
-	@Autowired
-	public AdministratorService(AdministratorRepository repository, AdministratorMapper mapper) {
+	public AdministratorService(AdministratorRepository repository, 
+			AdministratorMapper mapper) {	
 		super(repository, mapper);
 		
 		this.repository = repository;
+		this.mapper = mapper;
 	}
+
+	@Override
+	@Transactional
+	public Optional<AdministratorDTO> save(AdministratorRequest request) {
+		Administrator admin = mapper.requestToModel(request);
+		
+		admin.getTelephones()
+			.stream()
+			.forEach(x -> x.setPerson(admin));
+		
+		return Optional.of(mapper.modelToDTO(repository.saveAndFlush(admin)));
+	}
+	
 }

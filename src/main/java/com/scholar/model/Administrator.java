@@ -15,7 +15,7 @@ import lombok.ToString;
 @Entity
 @NoArgsConstructor
 @PrimaryKeyJoinColumn(name = "person_id")
-@Table(name = "administrator")
+@Table
 public class Administrator extends Person {
 
 }

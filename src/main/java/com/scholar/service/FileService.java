@@ -3,6 +3,8 @@ package com.scholar.service;
 import java.util.Optional;
 import java.util.UUID;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -31,6 +33,7 @@ public class FileService extends BaseService<File, FileDTO, FileRequest> {
 	}
 	
 	@Override
+	@Transactional
 	public Optional<FileDTO> save(FileRequest request) {
 		MultipartFile file = request.getFile();
 		File fileModel = mapper.requestToModel(request);
@@ -49,6 +52,7 @@ public class FileService extends BaseService<File, FileDTO, FileRequest> {
 	}
 	
 	@Override
+	@Transactional
 	public void deleteById(Long id) {
 		s3Service.remove(repository.findById(id).get().getFullName());
 		super.deleteById(id);

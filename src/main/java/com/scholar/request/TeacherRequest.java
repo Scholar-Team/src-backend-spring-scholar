@@ -1,8 +1,10 @@
 package com.scholar.request;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
-public class TeacherRequest {
+@EqualsAndHashCode(callSuper = true)
+public class TeacherRequest extends PersonRequest {
 
 }

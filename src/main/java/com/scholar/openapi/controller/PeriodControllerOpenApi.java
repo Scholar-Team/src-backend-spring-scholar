@@ -48,10 +48,11 @@ public interface PeriodControllerOpenApi {
 	ResponseEntity<?> findById(Long id);
 	
 	@ApiOperation("Cadastrar um período")
-	@ApiResponses({ 
+	@ApiResponses({
 		@ApiResponse(
 			code = 201, 
-			message = "Período cadastrado") 
+			message = "Período cadastrado",
+			response = PeriodDTO.class) 
 	})
 	ResponseEntity<?> save(
 		@ApiParam(name = "body", value = "Objeto do período", required = true) 

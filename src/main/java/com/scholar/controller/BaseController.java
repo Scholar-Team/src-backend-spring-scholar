@@ -4,13 +4,13 @@ import java.util.Optional;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.ResponseEntity;
 
-import com.scholar.service.BaseService;
+import com.scholar.service.IBaseService;
 
 public class BaseController<M, D, R> {
 
-	private BaseService<M, D, R> service;
+	private IBaseService<M, D, R> service;
 	
-	public BaseController(BaseService<M, D, R> service) {
+	public BaseController(IBaseService<M, D, R> service) {
 		this.service = service;
 	}
 	

@@ -10,16 +10,17 @@ import com.scholar.repository.ActivityRepository;
 import com.scholar.request.ActivityRequest;
 
 @Service
-public class ActivityService 
-	extends BaseService<Activity, ActivityDTO, ActivityRequest> {
+public class ActivityService extends BaseService<Activity, ActivityDTO, ActivityRequest> {
 
 	private ActivityRepository repository;
+	private ActivityMapper mapper;
 	
 	@Autowired
 	public ActivityService(ActivityRepository repository, ActivityMapper mapper) {
 		super(repository, mapper);
 		
 		this.repository = repository;
+		this.mapper = mapper;
 	}
 	
 }

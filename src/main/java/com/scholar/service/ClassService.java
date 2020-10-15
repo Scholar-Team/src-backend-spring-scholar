@@ -13,11 +13,14 @@ import com.scholar.request.ClassRequest;
 public class ClassService extends BaseService<Class, ClassDTO, ClassRequest> {
 
 	private ClassRepository repository;
+	private ClassMapper mapper;
 	
 	@Autowired
 	public ClassService(ClassRepository repository, ClassMapper mapper) {
 		super(repository, mapper);
 		
 		this.repository = repository;
+		this.mapper = mapper;
 	}
+	
 }

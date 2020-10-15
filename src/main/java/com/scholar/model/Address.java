@@ -16,10 +16,17 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "address")
+@Table
 public class Address {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
+	private String cep;
+	private String state;
+	private String city;
+	private String street;
+	private String number;
+	private String complement;
 }

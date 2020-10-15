@@ -24,6 +24,7 @@ import com.scholar.service.TelephoneService;
 public class TelephoneController implements TelephoneControllerOpenApi {
 
 	private TelephoneService service;
+	
 	private BaseController<Telephone, 
 	TelephoneDTO, TelephoneRequest> base;
 	

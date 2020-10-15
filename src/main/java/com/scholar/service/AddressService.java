@@ -13,11 +13,14 @@ import com.scholar.request.AddressRequest;
 public class AddressService extends BaseService<Address, AddressDTO, AddressRequest> {
 
 	private AddressRepository repository;
+	private AddressMapper mapper;
 	
 	@Autowired
 	public AddressService(AddressRepository repository, AddressMapper mapper) {
 		super(repository, mapper);
 		
 		this.repository = repository;
+		this.mapper = mapper;
 	}
+	
 }

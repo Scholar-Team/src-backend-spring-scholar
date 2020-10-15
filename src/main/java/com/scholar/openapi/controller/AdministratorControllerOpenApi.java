@@ -15,19 +15,19 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
-@Api(tags = "Controller dos Administradores")
+@Api(tags = "Controller dos administradores")
 public interface AdministratorControllerOpenApi {
 
-	@ApiOperation("Encontrar todos os Administradores")
+	@ApiOperation("Encontrar todos os administradores")
 	@ApiResponses({ 
 		@ApiResponse(
 			code = 200, 
-			message = "Todos os Administradores do sistema",
+			message = "Todos os administradores do sistema",
 			response = AdministratorDTO.class)
 	})
 	ResponseEntity<?> findAll();
 	
-	@ApiOperation("Encontrar Administrador pelo ID")
+	@ApiOperation("Encontrar administrador pelo ID")
 	@ApiResponses({ 
 		@ApiResponse(
 			code = 200, 
@@ -40,39 +40,39 @@ public interface AdministratorControllerOpenApi {
 	})
 	@ApiImplicitParam(
 			name = "id", 
-			value = "ID do Administrador", 
+			value = "ID do administrador", 
 			required = true, 
 			dataType = "int", 
 			paramType = "path",
 			example = "1")
 	ResponseEntity<?> findById(Long id);
 	
-	@ApiOperation("Cadastrar um Administrador")
+	@ApiOperation("Cadastrar um administrador")
 	@ApiResponses({ 
 		@ApiResponse(code = 201, message = "Administrador cadastrado") 
 	})
 	ResponseEntity<?> save(
-		@ApiParam(name = "body", value = "Objeto do Administrador", required = true) 
+		@ApiParam(name = "body", value = "Objeto do administrador", required = true) 
 		@Valid AdministratorRequest request
 	);
 	
-	@ApiOperation("Atualizar um Administrador pelo ID")
+	@ApiOperation("Atualizar um administrador pelo ID")
 	@ApiResponses({ 
 		@ApiResponse(code = 200, message = "Administrador atualizado") 
 	})
 	@ApiImplicitParam(
 			name = "id", 
-			value = "ID do Administrador", 
+			value = "ID do administrador", 
 			required = true, 
 			dataType = "int", 
 			paramType = "path",
 			example = "1")
 	ResponseEntity<?> putById(
 			Long id, 
-			@ApiParam(name = "body", value = "Objeto do Administrador", required = true) 
+			@ApiParam(name = "body", value = "Objeto do administrador", required = true) 
 			@Valid AdministratorRequest request);
 	
-	@ApiOperation("Deletar Administrador pelo ID")
+	@ApiOperation("Deletar administrador pelo ID")
 	@ApiResponses({ 
 		@ApiResponse(
 			code = 204, 
@@ -84,7 +84,7 @@ public interface AdministratorControllerOpenApi {
 	})
 	@ApiImplicitParam(
 			name = "id", 
-			value = "ID do Administrador", 
+			value = "ID do administrador", 
 			required = true, 
 			dataType = "int", 
 			paramType = "path",
