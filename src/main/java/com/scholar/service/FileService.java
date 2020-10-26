@@ -14,6 +14,7 @@ import com.scholar.mapper.FileMapper;
 import com.scholar.model.File;
 import com.scholar.repository.FileRepository;
 import com.scholar.request.FileRequest;
+import com.scholar.service.generic.BaseService;
 
 @Service
 public class FileService extends BaseService<File, FileDTO, FileRequest> {

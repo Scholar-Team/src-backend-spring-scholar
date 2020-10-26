@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -34,6 +36,7 @@ public class Person {
 	private Long id;
 
 	private String name;
+	private String email;
 	private String password;
 	private LocalDate birthDate;
 	private String cpf;
@@ -44,5 +47,13 @@ public class Person {
 	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "address_id")
 	private Address address;
+	
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(
+		name = "person_group", 
+		joinColumns = @JoinColumn(name = "person_id"),
+		inverseJoinColumns = @JoinColumn(name = "group_id")
+	)
+	private List<Group> groups;
 	
 }

@@ -16,6 +16,7 @@ import com.scholar.repository.ClassroomRepository;
 import com.scholar.repository.DisciplineRepository;
 import com.scholar.repository.TeacherRepository;
 import com.scholar.request.DisciplineRequest;
+import com.scholar.service.generic.BaseService;
 
 @Service
 public class DisciplineService extends BaseService<Discipline, DisciplineDTO, DisciplineRequest> {

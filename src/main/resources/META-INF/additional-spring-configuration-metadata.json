@@ -33,5 +33,15 @@
     "name": "BUCKET",
     "type": "java.lang.String",
     "description": "A description for 'BUCKET'"
+  },
+  {
+    "name": "scholar.client.password",
+    "type": "java.lang.String",
+    "description": "A description for 'scholar.client.password'"
+  },
+  {
+    "name": "scholar.client.username",
+    "type": "java.lang.String",
+    "description": "A description for 'scholar.client.username'"
   }
 ]}

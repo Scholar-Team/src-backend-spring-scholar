@@ -90,5 +90,4 @@ public interface ActivityControllerOpenApi {
 			paramType = "path",
 			example = "1")
 	ResponseEntity<?> deleteById(Long id);
-
 }

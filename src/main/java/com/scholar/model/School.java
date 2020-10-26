@@ -15,7 +15,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.scholar.enumerator.SchoolType;
+import com.scholar.model.enumeration.SchoolType;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

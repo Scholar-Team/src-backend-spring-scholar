@@ -8,6 +8,7 @@ import com.scholar.mapper.ActivityMapper;
 import com.scholar.model.Activity;
 import com.scholar.repository.ActivityRepository;
 import com.scholar.request.ActivityRequest;
+import com.scholar.service.generic.BaseService;
 
 @Service
 public class ActivityService extends BaseService<Activity, ActivityDTO, ActivityRequest> {

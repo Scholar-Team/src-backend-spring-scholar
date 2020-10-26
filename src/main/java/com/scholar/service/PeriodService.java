@@ -13,6 +13,7 @@ import com.scholar.model.Period;
 import com.scholar.repository.PeriodRepository;
 import com.scholar.repository.SchoolRepository;
 import com.scholar.request.PeriodRequest;
+import com.scholar.service.generic.BaseService;
 
 @Service
 public class PeriodService extends BaseService<Period, PeriodDTO, PeriodRequest> {
@@ -34,10 +35,16 @@ public class PeriodService extends BaseService<Period, PeriodDTO, PeriodRequest>
 	@Override
 	@Transactional
 	public Optional<PeriodDTO> save(PeriodRequest request) {
-		Period period = mapper.requestToModel(request);
-		period.setSchool(schoolRepository.findById(period.getSchool().getId()).get());
+		Period period = configPeriod(mapper.requestToModel(request));
 		
 		return Optional.of(mapper.modelToDTO(repository.save(period)));
+	}
+	
+	private Period configPeriod(Period period) {
+		period.setSchool(schoolRepository
+				.findById(period.getSchool().getId()).get());
+		
+		return period;
 	}
 
 }

@@ -25,7 +25,7 @@ public class ClassController implements ClassControllerOpenApi {
 
 	private ClassService service;
 	private BaseController<Class, 
-	ClassDTO, ClassRequest> base;
+		ClassDTO, ClassRequest> base;
 	
 	@Autowired
 	public ClassController(ClassService service) {		

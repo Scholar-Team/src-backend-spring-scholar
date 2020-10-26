@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
@@ -24,6 +25,9 @@ public class PersonRequest {
 	@NotBlank(message = "O nome não pode estar vazio.")
 	private String name;
 	
+	@Email(message = "Email deve ser válido")
+	private String email;
+	
 	@NotBlank(message = "A senha não pode estar vazia.")
 	@Size(min = 8, max = 64, message = "A senha deve ter entre 8 a 64 caracteres.")
 	private String password;
@@ -39,4 +43,6 @@ public class PersonRequest {
 	
 	@Valid
 	private AddressRequest address;
+	
+	private List<GroupRequest> groups;
 }

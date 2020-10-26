@@ -3,7 +3,7 @@ package com.scholar.dto;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.scholar.enumerator.SchoolType;
+import com.scholar.model.enumeration.SchoolType;
 
 import lombok.Data;
 

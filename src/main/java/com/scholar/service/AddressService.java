@@ -8,6 +8,7 @@ import com.scholar.mapper.AddressMapper;
 import com.scholar.model.Address;
 import com.scholar.repository.AddressRepository;
 import com.scholar.request.AddressRequest;
+import com.scholar.service.generic.BaseService;
 
 @Service
 public class AddressService extends BaseService<Address, AddressDTO, AddressRequest> {

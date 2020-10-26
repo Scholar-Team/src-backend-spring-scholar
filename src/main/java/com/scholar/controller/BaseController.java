@@ -4,7 +4,7 @@ import java.util.Optional;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.ResponseEntity;
 
-import com.scholar.service.IBaseService;
+import com.scholar.service.generic.IBaseService;
 
 public class BaseController<M, D, R> {
 

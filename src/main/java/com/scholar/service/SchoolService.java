@@ -8,6 +8,7 @@ import com.scholar.mapper.SchoolMapper;
 import com.scholar.model.School;
 import com.scholar.repository.SchoolRepository;
 import com.scholar.request.SchoolRequest;
+import com.scholar.service.generic.BaseService;
 
 @Service
 public class SchoolService extends BaseService<School, SchoolDTO, SchoolRequest> {

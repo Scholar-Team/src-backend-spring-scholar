@@ -1,4 +1,4 @@
-package com.scholar.service;
+package com.scholar.service.generic;
 
 import java.util.List;
 import java.util.Optional;

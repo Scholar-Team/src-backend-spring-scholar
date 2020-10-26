@@ -1,42 +1,32 @@
 package com.scholar.service;
 
-import java.util.Optional;
-
-import javax.transaction.Transactional;
-
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.scholar.dto.AdministratorDTO;
 import com.scholar.mapper.AdministratorMapper;
 import com.scholar.model.Administrator;
 import com.scholar.repository.AdministratorRepository;
+import com.scholar.repository.GroupRepository;
 import com.scholar.request.AdministratorRequest;
+import com.scholar.service.generic.AbstractPersonService;
 
 @Service
 public class AdministratorService 
-	extends BaseService<Administrator, AdministratorDTO, AdministratorRequest> {
+	extends AbstractPersonService<Administrator, AdministratorDTO, AdministratorRequest> {
 
 	private AdministratorRepository repository;
 	private AdministratorMapper mapper;
 	
+	@Autowired
 	public AdministratorService(AdministratorRepository repository, 
-			AdministratorMapper mapper) {	
-		super(repository, mapper);
+			AdministratorMapper mapper, GroupRepository groupRepository,
+			PasswordEncoder encoder) {	
+		super(repository, mapper, groupRepository, encoder);
 		
 		this.repository = repository;
 		this.mapper = mapper;
-	}
-
-	@Override
-	@Transactional
-	public Optional<AdministratorDTO> save(AdministratorRequest request) {
-		Administrator admin = mapper.requestToModel(request);
-		
-		admin.getTelephones()
-			.stream()
-			.forEach(x -> x.setPerson(admin));
-		
-		return Optional.of(mapper.modelToDTO(repository.saveAndFlush(admin)));
 	}
 	
 }

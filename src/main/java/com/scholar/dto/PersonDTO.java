@@ -13,9 +13,11 @@ import lombok.NoArgsConstructor;
 public class PersonDTO {
 
 	private Long id;
-	private String name;	
+	private String name;
+	private String email;
 	private LocalDate birthDate;
 	private String cpf;
 	private List<TelephoneDTO> telephones;
+	private List<GroupDTO> groups;
 	private AddressDTO address;
 }

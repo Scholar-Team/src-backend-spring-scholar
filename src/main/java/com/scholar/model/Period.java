@@ -15,7 +15,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.scholar.enumerator.SchoolPeriod;
+import com.scholar.model.enumeration.SchoolPeriod;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

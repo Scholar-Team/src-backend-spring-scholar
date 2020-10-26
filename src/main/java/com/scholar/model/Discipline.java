@@ -11,8 +11,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -32,11 +30,9 @@ public class Discipline {
 	
 	private String name;
 	
-	@JsonIgnore
 	@ManyToMany(mappedBy = "disciplines")
 	private List<Classroom> classrooms;
 	
-	@JsonIgnore
 	@ManyToMany
 	@JoinTable(
 		name = "discipline_teacher",

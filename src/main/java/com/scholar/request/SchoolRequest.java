@@ -3,7 +3,7 @@ package com.scholar.request;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 
-import com.scholar.enumerator.SchoolType;
+import com.scholar.model.enumeration.SchoolType;
 
 import lombok.Data;
 

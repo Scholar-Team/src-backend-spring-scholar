@@ -8,6 +8,7 @@ import com.scholar.mapper.TelephoneMapper;
 import com.scholar.model.Telephone;
 import com.scholar.repository.TelephoneRepository;
 import com.scholar.request.TelephoneRequest;
+import com.scholar.service.generic.BaseService;
 
 @Service
 public class TelephoneService extends BaseService<Telephone, TelephoneDTO, TelephoneRequest> {
