@@ -1,23 +1,47 @@
 package com.scholar.dto;
 
-import java.util.List;
+import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
-@Data
+@Getter
+@Setter
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@ToString
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class ClassroomDTO {
 
 	private Long id;
 	private String name;
 	
-	@JsonIgnoreProperties({"classrooms"})
-	private List<DisciplineDTO> disciplines;
+	@JsonIgnoreProperties({
+		"classrooms"
+	})
+	@ToString.Exclude
+	private Set<DisciplineDTO> disciplines;
 	
-	@JsonIgnoreProperties({"classroom", "address", "telephones"})
-	private List<StudentDTO> students;
+	@JsonIgnoreProperties({
+		"classroom", 
+		"address", 
+		"telephones",
+		"roles"
+	})
+	@ToString.Exclude
+	private Set<StudentDTO> students;
 	
-	@JsonIgnoreProperties({"classrooms"})
+	@JsonIgnoreProperties({
+		"classrooms"
+	})
+	@ToString.Exclude
 	private PeriodDTO period;
 }

@@ -5,16 +5,20 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.scholar.controller.generic.BaseController;
 import com.scholar.dto.FileDTO;
 import com.scholar.model.File;
 import com.scholar.openapi.controller.FileControllerOpenApi;
 import com.scholar.request.FileRequest;
+import com.scholar.security.permissions.CheckAdministrator;
 import com.scholar.service.FileService;
 
 @RestController
@@ -33,6 +37,7 @@ public class FileController implements FileControllerOpenApi {
 	}
 	
 	@Override
+	@CheckAdministrator.ViewAllData
 	@GetMapping
 	public ResponseEntity<?> findAll() {
 		return base.findAll();
@@ -52,12 +57,22 @@ public class FileController implements FileControllerOpenApi {
 
 	@Override
 	@PutMapping("/{id}")
-	public ResponseEntity<?> putById(@PathVariable Long id, FileRequest request) {
+	public ResponseEntity<?> putById(
+			@PathVariable Long id, 
+			FileRequest request) {
 		return base.putById(id, request);
+	}
+	
+	@PatchMapping("/{id}")
+	public ResponseEntity<?> patchById(
+			@PathVariable Long id, 
+			@RequestBody FileRequest request) {
+		
+		return base.patchById(id, request);
 	}
 
 	@Override
-	@DeleteMapping("{id}")
+	@DeleteMapping("/{id}")
 	public ResponseEntity<?> deleteById(@PathVariable Long id) {
 		return base.deleteById(id);
 	}

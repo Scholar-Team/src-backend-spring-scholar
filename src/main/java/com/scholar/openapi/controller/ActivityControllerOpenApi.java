@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import com.scholar.dto.ActivityDTO;
 import com.scholar.exception.config.Problem;
 import com.scholar.request.ActivityRequest;
+import com.scholar.request.FileRequest;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -53,7 +54,8 @@ public interface ActivityControllerOpenApi {
 	})
 	ResponseEntity<?> save(
 		@ApiParam(name = "body", value = "Objeto da atividade", required = true) 
-		@Valid ActivityRequest request
+		@Valid ActivityRequest request,
+		FileRequest fileRequest
 	);
 	
 	@ApiOperation("Atualizar uma atividade pelo ID")

@@ -1,20 +1,29 @@
 package com.scholar.request;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.validation.constraints.NotBlank;
 
-import com.scholar.model.Classroom;
-import com.scholar.model.Teacher;
-
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class DisciplineRequest {
 
+	private Long id;
+	
 	@NotBlank
 	private String name;
 	
-	private List<Classroom> classrooms;
-	private List<Teacher> teachers;
+	@Builder.Default
+	private Set<ClassroomRequest> classrooms = new HashSet<>();
+	
+	@Builder.Default
+	private Set<TeacherRequest> teachers = new HashSet<>();
 }

@@ -1,8 +1,10 @@
 package com.scholar.model;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -14,16 +16,21 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.scholar.model.enumeration.SchoolType;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
-@Data
-@ToString
+@Getter
+@Setter
+@Builder
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@ToString(onlyExplicitlyIncluded = true)
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -31,23 +38,41 @@ import lombok.ToString;
 public class School {
 
 	@Id
+	@EqualsAndHashCode.Include
+	@ToString.Include
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	@ToString.Include
+	@Column(nullable = false)
 	private String name;
+	
+	@ToString.Include
+	@Column(unique = true)
 	private String site;
 	
+	@ToString.Include
+	@Column(nullable = false)
 	@Enumerated(EnumType.STRING)
 	private SchoolType type;
 	
-	@JsonIgnore
-	@OneToMany(mappedBy = "school", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<Period> periods;
+	@OneToMany(
+		mappedBy = "school", 
+		cascade = CascadeType.REMOVE, 
+		orphanRemoval = true
+	)
+	@Builder.Default
+	private Set<Period> periods = new HashSet<>();
 	
-	@OneToOne(mappedBy = "school", cascade = CascadeType.ALL)
+	@OneToOne(
+		mappedBy = "school",
+		cascade = { CascadeType.REMOVE }
+	)
 	private Director director;
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(
+		cascade = CascadeType.ALL
+	)
     @JoinColumn(name = "address_id")
 	private Address address;
 }

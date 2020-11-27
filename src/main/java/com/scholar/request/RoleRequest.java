@@ -1,24 +1,26 @@
 package com.scholar.request;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.validation.constraints.NotBlank;
 
-import com.scholar.model.Permission;
-
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class GroupRequest {
+public class RoleRequest {
 
 	private Long id;
 	
 	@NotBlank
 	private String name;
 	
-	private Set<Permission> permissions;
+	@Builder.Default
+	private Set<PermissionRequest> permissions = new HashSet<>();
 }

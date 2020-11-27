@@ -1,21 +1,29 @@
 package com.scholar.model;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 
-@Data
+@Getter
+@Setter
+@SuperBuilder
 @EqualsAndHashCode(callSuper = true)
-@ToString
+@ToString(callSuper = true, onlyExplicitlyIncluded = true)
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -23,6 +31,18 @@ import lombok.ToString;
 @Table
 public class Teacher extends Person {
 
-	@ManyToMany(mappedBy = "teachers")
-	private List<Discipline> disciplines;
+	@ManyToMany(
+		mappedBy = "teachers", 
+		cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH }
+	)
+	@Builder.Default
+	private Set<Discipline> disciplines = new HashSet<>();
+	
+	@OneToMany(
+		mappedBy = "teacher",
+		cascade = { CascadeType.REMOVE }, 
+		orphanRemoval = true
+	)
+	@Builder.Default
+	private Set<Feedback> feedbacks = new HashSet<>();
 }

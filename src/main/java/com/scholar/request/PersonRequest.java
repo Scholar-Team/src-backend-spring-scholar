@@ -1,7 +1,8 @@
 package com.scholar.request;
 
 import java.time.LocalDate;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Email;
@@ -12,10 +13,13 @@ import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.br.CPF;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 @Data
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
 public class PersonRequest {
@@ -39,10 +43,12 @@ public class PersonRequest {
 	private String cpf;
 	
 	@Valid
-	private List<TelephoneRequest> telephones;
+	@Builder.Default
+	private Set<TelephoneRequest> telephones = new HashSet<>();
 	
 	@Valid
 	private AddressRequest address;
 	
-	private List<GroupRequest> groups;
+	@Builder.Default
+	private Set<RoleRequest> roles = new HashSet<>();
 }

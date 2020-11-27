@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import com.scholar.dto.ClassDTO;
 import com.scholar.exception.config.Problem;
 import com.scholar.request.ClassRequest;
+import com.scholar.request.FileRequest;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -53,7 +54,8 @@ public interface ClassControllerOpenApi {
 	})
 	ResponseEntity<?> save(
 		@ApiParam(name = "body", value = "Objeto da aula", required = true) 
-		@Valid ClassRequest request
+		@Valid ClassRequest request,
+		FileRequest attachment
 	);
 	
 	@ApiOperation("Atualizar uma aula pelo ID")

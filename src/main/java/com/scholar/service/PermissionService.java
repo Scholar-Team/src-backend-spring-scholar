@@ -8,6 +8,7 @@ import com.scholar.mapper.PermissionMapper;
 import com.scholar.model.Permission;
 import com.scholar.repository.PermissionRepository;
 import com.scholar.request.PermissionRequest;
+import com.scholar.security.permissions.data.AuthData;
 import com.scholar.service.generic.BaseService;
 
 @Service
@@ -17,8 +18,11 @@ public class PermissionService extends BaseService<Permission, PermissionDTO, Pe
 	private PermissionMapper mapper;
 	
 	@Autowired
-	public PermissionService(PermissionRepository repository, PermissionMapper mapper) {
-		super(repository, mapper);
+	public PermissionService(
+			PermissionRepository repository,
+			PermissionMapper mapper,
+			AuthData authData) {
+		super(repository, mapper, authData);
 		
 		this.repository = repository;
 		this.mapper = mapper;

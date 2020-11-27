@@ -1,4 +1,4 @@
-package com.scholar.security.config;
+package com.scholar.security.authuser;
 
 import java.util.Collection;
 
@@ -13,14 +13,12 @@ import lombok.Getter;
 public class AuthUser extends User {
 	private static final long serialVersionUID = 1L;
 	
-	private Long id;
-	private String name;
+	private Person person;
 	
 	public AuthUser(Person person, Collection<? extends GrantedAuthority> permissoes) {
 		super(person.getEmail(), person.getPassword(), permissoes);
 		
-		this.id = person.getId();
-		this.name = person.getName();
+		this.person = person;
 	}
 	
 }

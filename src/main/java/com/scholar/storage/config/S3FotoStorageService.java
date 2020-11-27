@@ -1,4 +1,4 @@
-package com.scholar.service;
+package com.scholar.storage.config;
 
 import java.net.URL;
 
@@ -11,7 +11,6 @@ import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
-import com.scholar.storage.config.StorageProperties;
 
 @Service
 public class S3FotoStorageService {
@@ -40,8 +39,7 @@ public class S3FotoStorageService {
 			
 			return amazonS3.getUrl(storageProperties.getBucket(), filePath);
 			
-		} catch (Exception e) {
-		}
+		} catch (Exception e) { }
 		
 		return null;				
 	}

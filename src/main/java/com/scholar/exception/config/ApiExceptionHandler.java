@@ -2,6 +2,7 @@ package com.scholar.exception.config;
 
 import java.time.OffsetDateTime;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.TypeMismatchException;
@@ -11,6 +12,7 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -26,6 +28,9 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import com.fasterxml.jackson.databind.JsonMappingException.Reference;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.fasterxml.jackson.databind.exc.PropertyBindingException;
+import com.scholar.exception.BusinessException;
+import com.scholar.exception.EntityNotFoundException;
+import com.scholar.exception.NotResultException;
 
 @ControllerAdvice
 public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
@@ -184,13 +189,30 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 		
 		return handleExceptionInternal(ex, problem, headers, status, request);
 	}
+	
+	@ExceptionHandler(AccessDeniedException.class)
+	public ResponseEntity<?> handleEntidadeNaoEncontrada(
+			AccessDeniedException ex, 
+			WebRequest request) {
 
-	/*@ExceptionHandler(EntidadeNaoEncontradaException.class)
-	public ResponseEntity<?> handleEntidadeNaoEncontrada(EntidadeNaoEncontradaException ex,
+	    HttpStatus status = HttpStatus.FORBIDDEN;
+	    ProblemType problemType = ProblemType.ACCESS_DENIED;
+	    String detail = ex.getMessage();
+
+	    Problem problem = createProblemBuilder(status, problemType, detail)
+	            .userMessage(detail)
+	            .userMessage("Você não possui permissão para executar essa operação.")
+	            .build();
+
+	    return handleExceptionInternal(ex, problem, new HttpHeaders(), status, request);
+	}
+
+	@ExceptionHandler(EntityNotFoundException.class)
+	public ResponseEntity<?> handleEntidadeNaoEncontrada(EntityNotFoundException ex,
 			WebRequest request) {
 		
 		HttpStatus status = HttpStatus.NOT_FOUND;
-		ProblemType problemType = ProblemType.RECURSO_NAO_ENCONTRADO;
+		ProblemType problemType = ProblemType.RESOURCE_NOT_FOUND;
 		String detail = ex.getMessage();
 		
 		Problem problem = createProblemBuilder(status, problemType, detail)
@@ -198,13 +220,13 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 				.build();
 		
 		return handleExceptionInternal(ex, problem, new HttpHeaders(), status, request);
-	}*/
+	}
 	
-	/*@ExceptionHandler(BusinessException.class)
+	@ExceptionHandler(BusinessException.class)
 	public ResponseEntity<?> handleNegocio(BusinessException ex, WebRequest request) {
 
 		HttpStatus status = HttpStatus.BAD_REQUEST;
-		ProblemType problemType = ProblemType.ERRO_NEGOCIO;
+		ProblemType problemType = ProblemType.BUSINESS_ERROR;
 		String detail = ex.getMessage();
 		
 		Problem problem = createProblemBuilder(status, problemType, detail)
@@ -212,7 +234,36 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 				.build();
 		
 		return handleExceptionInternal(ex, problem, new HttpHeaders(), status, request);
-	}*/
+	}
+	
+	@ExceptionHandler(NoSuchElementException.class)
+	public ResponseEntity<?> handleEntidadeNaoEncontrada(NoSuchElementException ex,
+			WebRequest request) {
+		
+		HttpStatus status = HttpStatus.NOT_FOUND;
+		ProblemType problemType = ProblemType.RESOURCE_NOT_FOUND;
+		String detail = ex.getMessage();
+		
+		Problem problem = createProblemBuilder(status, problemType, detail)
+				.userMessage(detail)
+				.build();
+		
+		return handleExceptionInternal(ex, problem, new HttpHeaders(), status, request);
+	}
+	
+	@ExceptionHandler(NotResultException.class)
+	public ResponseEntity<?> handleNegocio(NotResultException ex, WebRequest request) {
+
+		HttpStatus status = HttpStatus.NOT_FOUND;
+		ProblemType problemType = ProblemType.RESOURCE_NOT_FOUND;
+		String detail = ex.getMessage();
+		
+		Problem problem = createProblemBuilder(status, problemType, detail)
+				.userMessage(detail)
+				.build();
+		
+		return handleExceptionInternal(ex, problem, new HttpHeaders(), status, request);
+	}
 	
 	@Override
 	protected ResponseEntity<Object> handleExceptionInternal(Exception ex, 

@@ -2,14 +2,28 @@ package com.scholar.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import lombok.Data;
+import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 
-@Data
+@Getter
+@Setter
 @EqualsAndHashCode(callSuper = true)
-@JsonIgnoreProperties({"address"})
+@ToString(callSuper = true)
+@SuperBuilder
+@NoArgsConstructor
+@AllArgsConstructor
+@JsonIgnoreProperties({ "address" })
 public class DirectorDTO extends PersonDTO {
 
-	@JsonIgnoreProperties({"director"})
+	@JsonIgnoreProperties({
+		"director",
+		"periods",
+		"address"
+	})
 	private SchoolDTO school;
 }

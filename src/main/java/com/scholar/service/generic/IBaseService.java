@@ -7,7 +7,9 @@ public interface IBaseService<M, D, R> {
 
 	Optional<D> save(R request);
 	void deleteById(Long id);
-	void putById(D dto);
+	Optional<D> putById(Long id, R request);
+	Optional<D> patchById(Long id, R request);
 	List<D> findAll();
 	Optional<D> findById(Long id);
+	Long count();
 }

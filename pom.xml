@@ -73,6 +73,7 @@
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
 		</dependency>
+		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -82,7 +83,17 @@
 					<groupId>org.junit.vintage</groupId>
 					<artifactId>junit-vintage-engine</artifactId>
 				</exclusion>
+				<exclusion>
+					<groupId>org.junit.jupiter</groupId>
+					<artifactId>junit-jupiter</artifactId>
+				</exclusion>
 			</exclusions>
+		</dependency>
+		
+		<dependency>
+		    <groupId>junit</groupId>
+		    <artifactId>junit</artifactId>
+		    <scope>test</scope>
 		</dependency>
 		
    		<dependency>
@@ -119,9 +130,7 @@
         
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>
-                spring-boot-starter-oauth2-resource-server
-            </artifactId>
+            <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
         </dependency>
         <dependency>
             <groupId>com.nimbusds</groupId>
@@ -138,6 +147,33 @@
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-jwt</artifactId>
 			<version>1.0.11.RELEASE</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-mail</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-freemarker</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.flywaydb</groupId>
+			<artifactId>flyway-core</artifactId>
+		</dependency>
+		
+		<dependency>
+	    	<groupId>io.rest-assured</groupId>
+	    	<artifactId>rest-assured</artifactId>
+	    	<scope>test</scope>
+    	</dependency>
+    	
+    	<dependency>
+		    <groupId>com.google.guava</groupId>
+		    <artifactId>guava</artifactId>
+		    <version>30.0-jre</version>
 		</dependency>
 	</dependencies>
 

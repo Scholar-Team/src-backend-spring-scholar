@@ -10,5 +10,5 @@ import com.scholar.model.Person;
 @Repository
 public interface PersonRepository extends JpaRepository<Person, Long> {
 
-	Optional<Person> findByEmail(String email);
+	Optional<Person> findByEmail(String email);	
 }

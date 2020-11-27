@@ -18,6 +18,8 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 
+import com.scholar.security.token.JwtCustomClaimsTokenEnhancer;
+
 @Configuration
 @EnableAuthorizationServer
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
@@ -45,8 +47,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 			.secret(encoder.encode(clientPassword))
 			.authorizedGrantTypes("password", "refresh_token")
 			.scopes("write", "read")
-			.accessTokenValiditySeconds((int) TimeUnit.MINUTES.toSeconds(1))
-			.refreshTokenValiditySeconds((int) TimeUnit.DAYS.toSeconds(1));
+			.accessTokenValiditySeconds((int) TimeUnit.HOURS.toSeconds(20))
+			.refreshTokenValiditySeconds((int) TimeUnit.HOURS.toSeconds(20));
 	}
 	
 	@Override

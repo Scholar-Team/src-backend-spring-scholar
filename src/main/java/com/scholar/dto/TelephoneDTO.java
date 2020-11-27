@@ -1,11 +1,32 @@
 package com.scholar.dto;
 
-import lombok.Data;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 
-@Data
+import com.scholar.model.enumeration.TelephoneType;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter
+@Setter
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@ToString
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class TelephoneDTO {
 
+	@EqualsAndHashCode.Include
 	private Long id;
+	
 	private String number;
-	private String type;
+	
+	@Enumerated(EnumType.STRING)
+	private TelephoneType type;
 }

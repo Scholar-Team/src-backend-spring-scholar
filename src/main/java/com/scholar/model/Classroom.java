@@ -1,28 +1,35 @@
 package com.scholar.model;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
-@Data
-@ToString
+@Getter
+@Setter
+@Builder
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@ToString(onlyExplicitlyIncluded = true)
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -30,24 +37,50 @@ import lombok.ToString;
 public class Classroom {
 
 	@Id
+	@EqualsAndHashCode.Include
+	@ToString.Include
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	@ToString.Include
+	@Column(nullable = false)
 	private String name;
 	
-	@ManyToMany
-	@JoinTable(
-		name = "classroom_discipline",
-		joinColumns = @JoinColumn(name = "classroom_id"),
-		inverseJoinColumns = @JoinColumn(name = "discipline_id")
+	@ManyToMany(
+		cascade = { CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH },
+		mappedBy = "classrooms"
 	)
-	private List<Discipline> disciplines;
+	@Builder.Default
+	private Set<Discipline> disciplines = new HashSet<>();
 	
-	@OneToMany(mappedBy = "classroom", cascade = CascadeType.ALL)
-	private List<Student> students;
+	@OneToMany(
+		mappedBy = "classroom", 
+		cascade = CascadeType.REMOVE
+	)
+	@Builder.Default
+	private Set<Activity> activities = new HashSet<>();
 	
-	@JsonIgnore
-	@ManyToOne
+	@OneToMany(
+		mappedBy = "classroom",
+		cascade = { CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH }
+	)
+	@Builder.Default
+	private Set<Student> students = new HashSet<>();
+	
+	@ManyToOne(
+		cascade = { CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH }
+	)
 	@JoinColumn(name = "period_id", nullable = false)
+	@Setter(AccessLevel.NONE)
 	private Period period;
+	
+	public void setPeriod(Period period) {
+		if(Objects.nonNull(period))
+			period.getClassrooms().add(this);
+		
+		else if(Objects.nonNull(this.period))
+			this.period.getClassrooms().remove(this);
+		
+		this.period = period;
+	}
 }

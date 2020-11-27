@@ -4,14 +4,18 @@ import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
-import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 
-@Data
+@Getter
+@Setter
+@SuperBuilder
 @EqualsAndHashCode(callSuper = true)
-@ToString
+@ToString(callSuper = true)
 @Entity
 @NoArgsConstructor
 @PrimaryKeyJoinColumn(name = "person_id")
