@@ -63,7 +63,8 @@ public class FeedbackController implements FeedbackControllerOpenApi {
 
 	@Override
 	@PutMapping("/{id}")
-	public ResponseEntity<?> putById(@PathVariable Long id,
+	public ResponseEntity<?> putById(
+			@PathVariable Long id,
 			@RequestBody FeedbackRequest request) {
 		
 		return base.putById(id, request);

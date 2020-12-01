@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import com.scholar.dto.AdministratorDTO;
 import com.scholar.exception.config.Problem;
 import com.scholar.request.AdministratorRequest;
+import com.scholar.request.FileRequest;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -53,7 +54,8 @@ public interface AdministratorControllerOpenApi {
 	})
 	ResponseEntity<?> save(
 		@ApiParam(name = "body", value = "Objeto do administrador", required = true) 
-		@Valid AdministratorRequest request
+		@Valid AdministratorRequest request,
+		FileRequest fileRequest
 	);
 	
 	@ApiOperation("Atualizar um administrador pelo ID")

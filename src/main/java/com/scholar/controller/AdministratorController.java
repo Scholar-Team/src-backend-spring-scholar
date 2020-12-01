@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.scholar.controller.generic.BaseController;
@@ -18,6 +19,7 @@ import com.scholar.dto.AdministratorDTO;
 import com.scholar.model.Administrator;
 import com.scholar.openapi.controller.AdministratorControllerOpenApi;
 import com.scholar.request.AdministratorRequest;
+import com.scholar.request.FileRequest;
 import com.scholar.security.permissions.CheckAdministrator;
 import com.scholar.service.AdministratorService;
 
@@ -54,7 +56,11 @@ public class AdministratorController implements AdministratorControllerOpenApi {
 	@Override
 	@CheckAdministrator.SaveData
 	@PostMapping
-	public ResponseEntity<?> save(@RequestBody AdministratorRequest request) {
+	public ResponseEntity<?> save(
+			@RequestPart(name = "administrator", required = true) AdministratorRequest request,
+			FileRequest fileRequest) {
+		
+		request.setFile(fileRequest);
 		return base.save(request);
 	}
 

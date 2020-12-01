@@ -31,6 +31,9 @@ public class SchoolDTO {
 	private String name;
 	private String site;
 	
+	@ToString.Exclude
+	private FileDTO file;
+	
 	@Enumerated(EnumType.STRING)
 	private SchoolType type;
 	

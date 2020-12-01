@@ -14,4 +14,5 @@ public class ClassroomRequest {
 	private Long id;
 	private String name;
 	private PeriodRequest period;
+	private FileRequest file;
 }

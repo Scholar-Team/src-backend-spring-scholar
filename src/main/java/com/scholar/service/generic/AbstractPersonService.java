@@ -11,11 +11,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.Sets;
 import com.scholar.dto.PersonDTO;
 import com.scholar.mapper.BaseMapper;
+import com.scholar.mapper.FileMapper;
+import com.scholar.model.File;
 import com.scholar.model.Person;
 import com.scholar.repository.RoleRepository;
 import com.scholar.request.PersonRequest;
 import com.scholar.request.RoleRequest;
 import com.scholar.security.permissions.data.AuthData;
+import com.scholar.service.FileService;
 
 public abstract class AbstractPersonService<
 	M extends Person, 
@@ -26,6 +29,8 @@ public abstract class AbstractPersonService<
 	protected RoleRepository roleRepository;
 	protected PasswordEncoder encoder;
 	protected ObjectMapper objectMapper;
+	protected FileMapper fileMapper;
+	protected FileService fileService;
 	
 	private Set<RoleRequest> userRoles;
 	
@@ -34,11 +39,15 @@ public abstract class AbstractPersonService<
 			BaseMapper<M, D, R> mapper, 
 			RoleRepository roleRepository,
 			PasswordEncoder encoder,
-			AuthData authData) {
+			AuthData authData,
+			FileMapper fileMapper,
+			FileService fileService) {
 		super(repository, mapper, authData);
 		
 		this.roleRepository = roleRepository;
 		this.encoder = encoder;
+		this.fileMapper = fileMapper;
+		this.fileService = fileService;
 		
 		this.userRoles = Sets.newHashSet(new RoleRequest[] {
 			RoleRequest.builder().id(2L).build()
@@ -62,6 +71,13 @@ public abstract class AbstractPersonService<
 		});
 		
 		return model;
+	}
+	
+	protected File configFile(R request) {
+		File file = fileMapper.dtoToModel(fileService
+						.save(request.getFile()).get());
+		
+		return file;
 	}
 
 }

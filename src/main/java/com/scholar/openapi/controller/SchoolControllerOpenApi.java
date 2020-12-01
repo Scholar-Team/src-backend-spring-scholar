@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 
 import com.scholar.dto.SchoolDTO;
 import com.scholar.exception.config.Problem;
+import com.scholar.request.FileRequest;
 import com.scholar.request.SchoolRequest;
 
 import io.swagger.annotations.Api;
@@ -53,7 +54,8 @@ public interface SchoolControllerOpenApi {
 	})
 	ResponseEntity<?> save(
 		@ApiParam(name = "body", value = "Objeto da escola", required = true) 
-		@Valid SchoolRequest request
+		@Valid SchoolRequest request,
+		FileRequest fileRequest
 	);
 	
 	@ApiOperation("Atualizar uma escola pelo ID")

@@ -11,12 +11,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.scholar.controller.generic.BaseController;
 import com.scholar.dto.StudentDTO;
 import com.scholar.model.Student;
 import com.scholar.openapi.controller.StudentControllerOpenApi;
+import com.scholar.request.FileRequest;
 import com.scholar.request.StudentRequest;
 import com.scholar.security.permissions.CheckAdministrator;
 import com.scholar.security.permissions.CheckDirector;
@@ -55,7 +57,11 @@ public class StudentController implements StudentControllerOpenApi {
 	@Override
 	@CheckDirector.SaveData
 	@PostMapping
-	public ResponseEntity<?> save(@RequestBody StudentRequest request) {
+	public ResponseEntity<?> save(
+			@RequestPart(name = "student", required = true) StudentRequest request,
+			FileRequest fileRequest) {
+		
+		request.setFile(fileRequest);
 		return base.save(request);
 	}
 

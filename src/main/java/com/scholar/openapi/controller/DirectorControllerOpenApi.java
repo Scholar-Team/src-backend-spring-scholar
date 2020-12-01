@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import com.scholar.dto.DirectorDTO;
 import com.scholar.exception.config.Problem;
 import com.scholar.request.DirectorRequest;
+import com.scholar.request.FileRequest;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -55,7 +56,8 @@ public interface DirectorControllerOpenApi {
 	})
 	ResponseEntity<?> save(
 		@ApiParam(name = "body", value = "Objeto do diretor", required = true) 
-		@Valid DirectorRequest request
+		@Valid DirectorRequest request,
+		FileRequest fileRequest
 	);
 	
 	@ApiOperation("Atualizar um diretor pelo ID")

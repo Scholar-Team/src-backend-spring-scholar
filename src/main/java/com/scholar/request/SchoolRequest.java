@@ -27,4 +27,5 @@ public class SchoolRequest {
 	private AddressRequest address;
 	
 	private SchoolType type;
+	private FileRequest file;
 }

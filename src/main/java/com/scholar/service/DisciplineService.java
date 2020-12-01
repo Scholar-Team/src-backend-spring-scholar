@@ -1,6 +1,7 @@
 package com.scholar.service;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -15,10 +16,12 @@ import com.scholar.dto.StudentDTO;
 import com.scholar.dto.TeacherDTO;
 import com.scholar.mapper.DirectorMapper;
 import com.scholar.mapper.DisciplineMapper;
+import com.scholar.mapper.FileMapper;
 import com.scholar.mapper.StudentMapper;
 import com.scholar.mapper.TeacherMapper;
 import com.scholar.model.Director;
 import com.scholar.model.Discipline;
+import com.scholar.model.File;
 import com.scholar.repository.ClassroomRepository;
 import com.scholar.repository.DisciplineRepository;
 import com.scholar.repository.TeacherRepository;
@@ -38,6 +41,8 @@ public class DisciplineService
 	private TeacherMapper teacherMapper;
 	private StudentMapper studentMapper;
 	private DirectorMapper directorMapper;
+	private FileMapper fileMapper;
+	private FileService fileService;
 	
 	@Autowired
 	public DisciplineService(
@@ -48,6 +53,8 @@ public class DisciplineService
 			TeacherMapper teacherMapper,
 			StudentMapper studentMapper,
 			DirectorMapper directorMapper,
+			FileMapper fileMapper,
+			FileService fileService,
 			AuthData authData) {
 		super(repository, mapper, authData);
 		
@@ -59,6 +66,8 @@ public class DisciplineService
 		this.teacherMapper = teacherMapper;
 		this.studentMapper = studentMapper;
 		this.directorMapper = directorMapper;
+		this.fileMapper = fileMapper;
+		this.fileService = fileService;
 	}
 	
 	@Transactional(readOnly = true)
@@ -96,6 +105,9 @@ public class DisciplineService
 	}
 	
 	private Discipline configDiscipline(Discipline discipline, DisciplineRequest request) {
+		if(!Objects.isNull(request.getFile().getFile()))
+			discipline.setFile(configFile(request));
+		
 		discipline.setClassrooms(new HashSet<>());
 		request.getClassrooms().forEach(x -> {
 			discipline.addClassroom(classroomRepository
@@ -107,8 +119,15 @@ public class DisciplineService
 			discipline.addTeacher(teacherRepository
 					.findById(x.getId()).get());
 		});
-		
+				
 		return discipline;
+	}
+	
+	private File configFile(DisciplineRequest request) {
+		File file = fileMapper.dtoToModel(fileService
+						.save(request.getFile()).get());
+		
+		return file;
 	}
 
 }

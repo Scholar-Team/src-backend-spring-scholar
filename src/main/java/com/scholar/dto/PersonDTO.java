@@ -29,6 +29,9 @@ public class PersonDTO {
 	private String cpf;
 	
 	@ToString.Exclude
+	private FileDTO file;
+	
+	@ToString.Exclude
 	private Set<TelephoneDTO> telephones;
 	
 	@ToString.Exclude

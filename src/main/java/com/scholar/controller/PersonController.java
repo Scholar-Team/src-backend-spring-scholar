@@ -26,7 +26,7 @@ public class PersonController implements PersonControllerOpenApi {
 
 	private PersonService service;
 	private BaseController<Person, 
-	PersonDTO, PersonRequest> base;
+		PersonDTO, PersonRequest> base;
 	
 	@Autowired
 	public PersonController(PersonService service) {		

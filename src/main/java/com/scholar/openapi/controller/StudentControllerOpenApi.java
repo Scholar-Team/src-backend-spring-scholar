@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 
 import com.scholar.dto.StudentDTO;
 import com.scholar.exception.config.Problem;
+import com.scholar.request.FileRequest;
 import com.scholar.request.StudentRequest;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -52,7 +53,8 @@ public interface StudentControllerOpenApi {
 	})
 	ResponseEntity<?> save(
 		@ApiParam(name = "body", value = "Objeto do estudante", required = true) 
-		@Valid StudentRequest request
+		@Valid StudentRequest request,
+		FileRequest fileRequest
 	);
 	
 	@ApiOperation("Atualizar um estudante pelo ID")

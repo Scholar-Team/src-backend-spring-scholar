@@ -56,7 +56,7 @@ public abstract class BaseService<M, D, R> implements IBaseService<M, D, R> {
 	@Override
 	@Transactional
 	public Optional<D> patchById(Long id, R request) {
-		M modelrequest = mapper.requestToModel(request);	
+		M modelrequest = mapper.requestToModel(request);
 		M model = repository.findById(id).get();
 		
 		MyBeanUtils.copyNonNullProperties(modelrequest, model);

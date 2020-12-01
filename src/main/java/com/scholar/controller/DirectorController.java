@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.scholar.controller.generic.BaseController;
@@ -18,6 +19,7 @@ import com.scholar.dto.DirectorDTO;
 import com.scholar.model.Director;
 import com.scholar.openapi.controller.DirectorControllerOpenApi;
 import com.scholar.request.DirectorRequest;
+import com.scholar.request.FileRequest;
 import com.scholar.security.permissions.CheckAdministrator;
 import com.scholar.security.permissions.CheckPerson;
 import com.scholar.service.DirectorService;
@@ -54,7 +56,11 @@ public class DirectorController implements DirectorControllerOpenApi {
 	@Override
 	@CheckAdministrator.SaveData
 	@PostMapping
-	public ResponseEntity<?> save(@RequestBody DirectorRequest request) {
+	public ResponseEntity<?> save(
+			@RequestPart(name = "director", required = true) DirectorRequest request,
+			FileRequest fileRequest) {
+		
+		request.setFile(fileRequest);
 		return base.save(request);
 	}
 

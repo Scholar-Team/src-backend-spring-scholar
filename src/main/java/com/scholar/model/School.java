@@ -51,6 +51,10 @@ public class School {
 	@Column(unique = true)
 	private String site;
 	
+	@OneToOne
+	@JoinColumn(name = "file_id")
+	private File file;
+	
 	@ToString.Include
 	@Column(nullable = false)
 	@Enumerated(EnumType.STRING)

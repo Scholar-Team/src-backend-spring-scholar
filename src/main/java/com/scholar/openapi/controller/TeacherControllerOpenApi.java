@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 
 import com.scholar.dto.TeacherDTO;
 import com.scholar.exception.config.Problem;
+import com.scholar.request.FileRequest;
 import com.scholar.request.TeacherRequest;
 
 import io.swagger.annotations.Api;
@@ -53,7 +54,8 @@ public interface TeacherControllerOpenApi {
 	})
 	ResponseEntity<?> save(
 		@ApiParam(name = "body", value = "Objeto do professor", required = true) 
-		@Valid TeacherRequest request
+		@Valid TeacherRequest request,
+		FileRequest fileRequest
 	);
 	
 	@ApiOperation("Atualizar um professor pelo ID")

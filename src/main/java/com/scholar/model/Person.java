@@ -78,6 +78,10 @@ public class Person {
     @JoinColumn(name = "address_id")
 	private Address address;
 	
+	@OneToOne
+	@JoinColumn(name = "file_id")
+	private File file;
+	
 	@ManyToMany(
 		cascade = { CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH }
 	)

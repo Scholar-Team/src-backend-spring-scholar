@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.scholar.controller.generic.BaseController;
@@ -18,6 +19,7 @@ import com.scholar.dto.ClassroomDTO;
 import com.scholar.model.Classroom;
 import com.scholar.openapi.controller.ClassroomControllerOpenApi;
 import com.scholar.request.ClassroomRequest;
+import com.scholar.request.FileRequest;
 import com.scholar.security.permissions.CheckAdministrator;
 import com.scholar.security.permissions.CheckClassroom;
 import com.scholar.service.ClassroomService;
@@ -54,7 +56,11 @@ public class ClassroomController implements ClassroomControllerOpenApi {
 	@Override
 	@CheckClassroom.SaveClassroom
 	@PostMapping
-	public ResponseEntity<?> save(@RequestBody ClassroomRequest request) {
+	public ResponseEntity<?> save(
+			@RequestPart(name = "classroom", required = true) ClassroomRequest request,
+			FileRequest fileRequest) {
+		
+		request.setFile(fileRequest);
 		return base.save(request);
 	}
 

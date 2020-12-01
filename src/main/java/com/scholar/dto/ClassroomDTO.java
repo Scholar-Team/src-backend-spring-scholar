@@ -30,6 +30,9 @@ public class ClassroomDTO {
 	@ToString.Exclude
 	private Set<DisciplineDTO> disciplines;
 	
+	@ToString.Exclude
+	private FileDTO file;
+	
 	@JsonIgnoreProperties({
 		"classroom", 
 		"address", 

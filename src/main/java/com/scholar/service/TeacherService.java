@@ -1,5 +1,6 @@
 package com.scholar.service;
 
+import java.util.Objects;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.scholar.dto.SchoolDTO;
 import com.scholar.dto.TeacherDTO;
+import com.scholar.mapper.FileMapper;
 import com.scholar.mapper.SchoolMapper;
 import com.scholar.mapper.TeacherMapper;
 import com.scholar.model.School;
@@ -35,9 +37,11 @@ public class TeacherService
 			RoleRepository roleRepository,
 			PasswordEncoder encoder,
 			SchoolMapper schoolMapper,
-			AuthData authData) {
+			AuthData authData,
+			FileMapper fileMapper,
+			FileService fileService) {
 		super(repository, mapper, roleRepository, 
-				encoder, authData);
+				encoder, authData, fileMapper, fileService);
 		
 		this.repository = repository;
 		this.mapper = mapper;
@@ -70,17 +74,20 @@ public class TeacherService
 	@Override
 	@Transactional
 	public Optional<TeacherDTO> save(TeacherRequest request) {
-		Teacher teacher = configTeacher(mapper.requestToModel(request));
+		Teacher teacher = configTeacher(mapper.requestToModel(request), request);
 		
 		return Optional.of(mapper
 				.modelToDTO(repository.saveAndFlush(teacher)));
 	}
 	
-	private Teacher configTeacher(Teacher teacher) {
+	private Teacher configTeacher(Teacher teacher, TeacherRequest request) {
 		teacher = configModel(teacher);
 		
 		teacher.addRole(roleRepository
 				.findById(5L).get());
+		
+		if(!Objects.isNull(request.getFile().getFile()))
+			teacher.setFile(configFile(request));
 		
 		return teacher;
 	}

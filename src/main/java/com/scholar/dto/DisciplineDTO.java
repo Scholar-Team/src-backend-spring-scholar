@@ -27,6 +27,9 @@ public class DisciplineDTO {
 	
 	private String name;
 	
+	@ToString.Exclude
+	private FileDTO file;
+	
 	@JsonIgnoreProperties({
 		"disciplines"
 	})

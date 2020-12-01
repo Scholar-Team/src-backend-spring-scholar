@@ -1,5 +1,6 @@
 package com.scholar.service;
 
+import java.util.Objects;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,9 +11,11 @@ import com.scholar.dto.ClassroomDTO;
 import com.scholar.dto.DirectorDTO;
 import com.scholar.mapper.ClassroomMapper;
 import com.scholar.mapper.DirectorMapper;
+import com.scholar.mapper.FileMapper;
 import com.scholar.mapper.PeriodMapper;
 import com.scholar.model.Classroom;
 import com.scholar.model.Director;
+import com.scholar.model.File;
 import com.scholar.repository.ClassroomRepository;
 import com.scholar.repository.PeriodRepository;
 import com.scholar.request.ClassroomRequest;
@@ -29,6 +32,8 @@ public class ClassroomService
 	private PeriodRepository periodRepository;
 	private PeriodMapper periodMapper;
 	private DirectorMapper directorMapper;
+	private FileMapper fileMapper;
+	private FileService fileService;
 	
 	@Autowired
 	public ClassroomService(
@@ -37,6 +42,8 @@ public class ClassroomService
 			PeriodRepository periodRepository,
 			DirectorMapper directorMapper,
 			PeriodMapper periodMapper,
+			FileMapper fileMapper,
+			FileService fileService,
 			AuthData authData) {	
 		super(repository, mapper, authData);
 		
@@ -46,6 +53,8 @@ public class ClassroomService
 		this.periodRepository = periodRepository;
 		this.directorMapper = directorMapper;
 		this.periodMapper = periodMapper;
+		this.fileMapper = fileMapper;
+		this.fileService = fileService;
 	}
 	
 	@Override
@@ -67,12 +76,17 @@ public class ClassroomService
 	@Override
 	@Transactional
 	public Optional<ClassroomDTO> save(ClassroomRequest request) {
-		Classroom classroom = configClassroom(mapper.requestToModel(request));
+		Classroom classroom = 
+				configClassroom(mapper.requestToModel(request), request);
 		
-		return Optional.of(mapper.modelToDTO(repository.saveAndFlush(classroom)));
+		return Optional.of(mapper
+				.modelToDTO(repository.saveAndFlush(classroom)));
 	}
 	
-	private Classroom configClassroom(Classroom classroom) {
+	private Classroom configClassroom(Classroom classroom, ClassroomRequest request) {
+		if(!Objects.isNull(request.getFile().getFile()))
+			classroom.setFile(configFile(request));
+		
 		classroom.setPeriod(periodRepository
 				.findById(classroom.getPeriod().getId()).get());
 		
@@ -87,6 +101,13 @@ public class ClassroomService
 			return Optional.of(directorMapper.modelToDTO(director.get()));
 		
 		return Optional.empty();
+	}
+	
+	private File configFile(ClassroomRequest request) {
+		File file = fileMapper.dtoToModel(fileService
+						.save(request.getFile()).get());
+		
+		return file;
 	}
 	
 }

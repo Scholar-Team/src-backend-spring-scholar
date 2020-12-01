@@ -42,6 +42,8 @@ public class PersonRequest {
 	@CPF(message = "O CPF deve ser válido.")
 	private String cpf;
 	
+	private FileRequest file;
+	
 	@Valid
 	@Builder.Default
 	private Set<TelephoneRequest> telephones = new HashSet<>();

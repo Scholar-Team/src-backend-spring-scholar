@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import com.scholar.dto.DisciplineDTO;
 import com.scholar.exception.config.Problem;
 import com.scholar.request.DisciplineRequest;
+import com.scholar.request.FileRequest;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -55,7 +56,8 @@ public interface DisciplineControllerOpenApi {
 	})
 	ResponseEntity<?> save(
 		@ApiParam(name = "body", value = "Objeto da disciplina", required = true) 
-		@Valid DisciplineRequest request
+		@Valid DisciplineRequest request,
+		FileRequest fileRequest
 	);
 	
 	@ApiOperation("Atualizar uma disciplina pelo ID")

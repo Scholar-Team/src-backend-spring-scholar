@@ -1,5 +1,6 @@
 package com.scholar.service;
 
+import java.util.Objects;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.scholar.dto.AdministratorDTO;
 import com.scholar.mapper.AdministratorMapper;
+import com.scholar.mapper.FileMapper;
 import com.scholar.model.Administrator;
 import com.scholar.repository.AdministratorRepository;
 import com.scholar.repository.RoleRepository;
@@ -29,9 +31,11 @@ public class AdministratorService
 			AdministratorMapper mapper,
 			RoleRepository roleRepository,
 			PasswordEncoder encoder,
-			AuthData authData) {	
+			AuthData authData,
+			FileMapper fileMapper,
+			FileService fileService) {	
 		super(repository, mapper, roleRepository, 
-				encoder, authData);
+				encoder, authData, fileMapper, fileService);
 		
 		this.repository = repository;
 		this.mapper = mapper;
@@ -41,13 +45,18 @@ public class AdministratorService
 	@Transactional
 	public Optional<AdministratorDTO> save(AdministratorRequest request) {
 		Administrator administrator = 
-				configAdministrator(mapper.requestToModel(request));
+				configAdministrator(mapper.requestToModel(request), request);
 		
 		return Optional.of(mapper
 				.modelToDTO(repository.saveAndFlush(administrator)));
 	}
 	
-	private Administrator configAdministrator(Administrator administrator) {
+	private Administrator configAdministrator(
+			Administrator administrator, 
+			AdministratorRequest request) {
+		if(!Objects.isNull(request.getFile().getFile()))
+			administrator.setFile(configFile(request));
+		
 		administrator = configModel(administrator);
 		
 		administrator.addRole(roleRepository

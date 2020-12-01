@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.scholar.controller.generic.BaseController;
@@ -18,6 +19,7 @@ import com.scholar.dto.DisciplineDTO;
 import com.scholar.model.Discipline;
 import com.scholar.openapi.controller.DisciplineControllerOpenApi;
 import com.scholar.request.DisciplineRequest;
+import com.scholar.request.FileRequest;
 import com.scholar.security.permissions.CheckAdministrator;
 import com.scholar.security.permissions.CheckDiscipline;
 import com.scholar.service.DisciplineService;
@@ -54,7 +56,11 @@ public class DisciplineController implements DisciplineControllerOpenApi {
 	@Override
 	@CheckDiscipline.SaveDiscipline
 	@PostMapping
-	public ResponseEntity<?> save(@RequestBody DisciplineRequest request) {
+	public ResponseEntity<?> save(
+			@RequestPart(name = "discipline", required = true) DisciplineRequest request,
+			FileRequest fileRequest) {
+		
+		request.setFile(fileRequest);
 		return base.save(request);
 	}
 

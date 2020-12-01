@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -43,6 +44,10 @@ public class Discipline {
 	@ToString.Include
 	@Column(nullable = false)
 	private String name;
+	
+	@OneToOne
+	@JoinColumn(name = "file_id")
+	private File file;
 	
 	@ManyToMany(
 		cascade = { CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH }

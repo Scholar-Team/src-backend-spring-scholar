@@ -21,6 +21,8 @@ public class DisciplineRequest {
 	@NotBlank
 	private String name;
 	
+	private FileRequest file;
+	
 	@Builder.Default
 	private Set<ClassroomRequest> classrooms = new HashSet<>();
 	

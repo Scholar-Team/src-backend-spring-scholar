@@ -1,6 +1,7 @@
 package com.scholar.service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -18,11 +19,13 @@ import com.scholar.dto.TeacherDTO;
 import com.scholar.mapper.ClassroomMapper;
 import com.scholar.mapper.DirectorMapper;
 import com.scholar.mapper.DisciplineMapper;
+import com.scholar.mapper.FileMapper;
 import com.scholar.mapper.PeriodMapper;
 import com.scholar.mapper.SchoolMapper;
 import com.scholar.mapper.StudentMapper;
 import com.scholar.mapper.TeacherMapper;
 import com.scholar.model.Director;
+import com.scholar.model.File;
 import com.scholar.model.School;
 import com.scholar.repository.SchoolRepository;
 import com.scholar.request.SchoolRequest;
@@ -30,7 +33,8 @@ import com.scholar.security.permissions.data.AuthData;
 import com.scholar.service.generic.BaseService;
 
 @Service
-public class SchoolService extends BaseService<School, SchoolDTO, SchoolRequest> {
+public class SchoolService 
+	extends BaseService<School, SchoolDTO, SchoolRequest> {
 
 	private SchoolRepository repository;
 	private SchoolMapper mapper;
@@ -41,6 +45,8 @@ public class SchoolService extends BaseService<School, SchoolDTO, SchoolRequest>
 	private TeacherMapper teacherMapper;
 	private DisciplineMapper disciplineMapper;
 	private ClassroomMapper classroomMapper;
+	private FileMapper fileMapper;
+	private FileService fileService;
 	
 	@Autowired
 	public SchoolService(
@@ -52,6 +58,8 @@ public class SchoolService extends BaseService<School, SchoolDTO, SchoolRequest>
 			TeacherMapper teacherMapper,
 			DisciplineMapper disciplineMapper,
 			ClassroomMapper classroomMapper,
+			FileMapper fileMapper,
+			FileService fileService,
 			AuthData authData) {
 		super(repository, mapper, authData);
 		
@@ -64,6 +72,16 @@ public class SchoolService extends BaseService<School, SchoolDTO, SchoolRequest>
 		this.teacherMapper = teacherMapper;
 		this.disciplineMapper = disciplineMapper;
 		this.classroomMapper = classroomMapper;
+		this.fileMapper = fileMapper;
+		this.fileService = fileService;
+	}
+	
+	@Override
+	@Transactional
+	public Optional<SchoolDTO> save(SchoolRequest request) {
+		School school = configSchool(mapper.requestToModel(request), request);
+		
+		return Optional.of(mapper.modelToDTO(repository.saveAndFlush(school)));
 	}
 	
 	@Transactional(readOnly = true)
@@ -114,6 +132,20 @@ public class SchoolService extends BaseService<School, SchoolDTO, SchoolRequest>
 				.stream()
 				.map(x -> disciplineMapper.modelToDTO(x))
 				.collect(Collectors.toList());
+	}
+	
+	private School configSchool(School school, SchoolRequest request) {
+		if(!Objects.isNull(request.getFile().getFile()))
+			school.setFile(configFile(request));
+		
+		return school;
+	}
+	
+	private File configFile(SchoolRequest request) {
+		File file = fileMapper.dtoToModel(fileService
+						.save(request.getFile()).get());
+		
+		return file;
 	}
 
 }

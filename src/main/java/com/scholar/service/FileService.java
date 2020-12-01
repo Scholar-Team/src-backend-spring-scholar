@@ -55,7 +55,8 @@ public class FileService
 		fileModel.setSize(multiPartFile.getSize());
 		fileModel.setUrl(s3Service.save(multiPartFile, fileModel.getFullName()));
 	    
-	    return Optional.of(mapper.modelToDTO(repository.saveAndFlush(fileModel)));
+	    return Optional.of(mapper
+	    		.modelToDTO(repository.saveAndFlush(fileModel)));
 	}
 	
 	@Override

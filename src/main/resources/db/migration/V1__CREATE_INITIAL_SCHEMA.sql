@@ -1,5 +1,5 @@
 -- Host: 127.0.0.1
--- Tempo de geração: 27-Nov-2020 às 07:27
+-- Tempo de geração: 01-Dez-2020 às 18:32
 -- Versão do servidor: 10.4.13-MariaDB
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -109,6 +109,7 @@ CREATE TABLE class (
 CREATE TABLE classroom (
   id bigint(20) NOT NULL,
   name varchar(255) NOT NULL,
+  file_id bigint(20) DEFAULT NULL,
   period_id bigint(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -131,7 +132,8 @@ CREATE TABLE director (
 
 CREATE TABLE discipline (
   id bigint(20) NOT NULL,
-  name varchar(255) NOT NULL
+  name varchar(255) NOT NULL,
+  file_id bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -235,7 +237,8 @@ CREATE TABLE person (
   email varchar(255) NOT NULL,
   name varchar(255) NOT NULL,
   password varchar(255) NOT NULL,
-  address_id bigint(20) DEFAULT NULL
+  address_id bigint(20) DEFAULT NULL,
+  file_id bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -271,7 +274,8 @@ CREATE TABLE school (
   name varchar(255) NOT NULL,
   site varchar(255) DEFAULT NULL,
   type varchar(255) NOT NULL,
-  address_id bigint(20) DEFAULT NULL
+  address_id bigint(20) DEFAULT NULL,
+  file_id bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -362,6 +366,7 @@ ALTER TABLE class
 --
 ALTER TABLE classroom
   ADD PRIMARY KEY (id),
+  ADD KEY FKet23omw4xfaxxiobnnddhotho (file_id),
   ADD KEY FK5b4ttmr2n3kdlbyinpnfkf52q (period_id);
 
 --
@@ -375,7 +380,8 @@ ALTER TABLE director
 -- Índices para tabela discipline
 --
 ALTER TABLE discipline
-  ADD PRIMARY KEY (id);
+  ADD PRIMARY KEY (id),
+  ADD KEY FKfei0k9ta1pnh3aa40s6uk57bd (file_id);
 
 --
 -- Índices para tabela discipline_classroom
@@ -433,7 +439,8 @@ ALTER TABLE person
   ADD PRIMARY KEY (id),
   ADD UNIQUE KEY UK_ovihp2p82c97wbe60mv11txrj (cpf),
   ADD UNIQUE KEY UK_fwmwi44u55bo4rvwsv0cln012 (email),
-  ADD KEY FKk7rgn6djxsv2j2bv1mvuxd4m9 (address_id);
+  ADD KEY FKk7rgn6djxsv2j2bv1mvuxd4m9 (address_id),
+  ADD KEY FKeid7tktqj3rv9e5wk2isfgdis (file_id);
 
 --
 -- Índices para tabela person_role
@@ -455,7 +462,8 @@ ALTER TABLE role
 ALTER TABLE school
   ADD PRIMARY KEY (id),
   ADD UNIQUE KEY UK_5rmrqdw1eyq8i02v9ifi1u6w4 (site),
-  ADD KEY FKje7ysjh9qami0jc33ykm13g1d (address_id);
+  ADD KEY FKje7ysjh9qami0jc33ykm13g1d (address_id),
+  ADD KEY FKt959k7c7akua6lstimea7fwxc (file_id);
 
 --
 -- Índices para tabela student
@@ -608,7 +616,8 @@ ALTER TABLE class
 -- Limitadores para a tabela classroom
 --
 ALTER TABLE classroom
-  ADD CONSTRAINT FK5b4ttmr2n3kdlbyinpnfkf52q FOREIGN KEY (period_id) REFERENCES period (id);
+  ADD CONSTRAINT FK5b4ttmr2n3kdlbyinpnfkf52q FOREIGN KEY (period_id) REFERENCES period (id),
+  ADD CONSTRAINT FKet23omw4xfaxxiobnnddhotho FOREIGN KEY (file_id) REFERENCES file (id);
 
 --
 -- Limitadores para a tabela director
@@ -616,6 +625,12 @@ ALTER TABLE classroom
 ALTER TABLE director
   ADD CONSTRAINT FK8eksly1t3rr6qjv2iknk3k35m FOREIGN KEY (person_id) REFERENCES person (id),
   ADD CONSTRAINT FKcko9qf90ufewkthjhm1clad25 FOREIGN KEY (school_id) REFERENCES school (id);
+
+--
+-- Limitadores para a tabela discipline
+--
+ALTER TABLE discipline
+  ADD CONSTRAINT FKfei0k9ta1pnh3aa40s6uk57bd FOREIGN KEY (file_id) REFERENCES file (id);
 
 --
 -- Limitadores para a tabela discipline_classroom
@@ -656,6 +671,7 @@ ALTER TABLE permission_role
 -- Limitadores para a tabela person
 --
 ALTER TABLE person
+  ADD CONSTRAINT FKeid7tktqj3rv9e5wk2isfgdis FOREIGN KEY (file_id) REFERENCES file (id),
   ADD CONSTRAINT FKk7rgn6djxsv2j2bv1mvuxd4m9 FOREIGN KEY (address_id) REFERENCES address (id);
 
 --
@@ -669,7 +685,8 @@ ALTER TABLE person_role
 -- Limitadores para a tabela school
 --
 ALTER TABLE school
-  ADD CONSTRAINT FKje7ysjh9qami0jc33ykm13g1d FOREIGN KEY (address_id) REFERENCES address (id);
+  ADD CONSTRAINT FKje7ysjh9qami0jc33ykm13g1d FOREIGN KEY (address_id) REFERENCES address (id),
+  ADD CONSTRAINT FKt959k7c7akua6lstimea7fwxc FOREIGN KEY (file_id) REFERENCES file (id);
 
 --
 -- Limitadores para a tabela student
