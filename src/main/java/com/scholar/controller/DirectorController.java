@@ -54,7 +54,7 @@ public class DirectorController implements DirectorControllerOpenApi {
 	}
 
 	@Override
-	@CheckAdministrator.SaveData
+	//@CheckAdministrator.SaveData
 	@PostMapping
 	public ResponseEntity<?> save(
 			@RequestPart(name = "director", required = true) DirectorRequest request,

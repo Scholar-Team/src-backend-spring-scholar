@@ -9,6 +9,7 @@ import javax.crypto.spec.SecretKeySpec;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -36,6 +37,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		.and()
 			.csrf().disable()
             .authorizeRequests()
+            .antMatchers(HttpMethod.POST, "/school").permitAll()
+            .antMatchers(HttpMethod.POST, "/director").permitAll()
             .anyRequest()
             .authenticated()
 		.and()

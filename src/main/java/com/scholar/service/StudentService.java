@@ -1,15 +1,21 @@
 package com.scholar.service;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.scholar.dto.ClassDTO;
+import com.scholar.dto.DisciplineDTO;
 import com.scholar.dto.SchoolDTO;
 import com.scholar.dto.StudentDTO;
+import com.scholar.mapper.ClassMapper;
+import com.scholar.mapper.DisciplineMapper;
 import com.scholar.mapper.FileMapper;
 import com.scholar.mapper.SchoolMapper;
 import com.scholar.mapper.StudentMapper;
@@ -31,6 +37,8 @@ public class StudentService
 	
 	private ClassroomRepository classroomRepository;
 	private SchoolMapper schoolMapper;
+	private DisciplineMapper disciplineMapper;
+	private ClassMapper classMapper;
 	
 	@Autowired
 	public StudentService(
@@ -40,6 +48,8 @@ public class StudentService
 			PasswordEncoder encoder,
 			ClassroomRepository classroomRepository,
 			SchoolMapper schoolMapper,
+			DisciplineMapper disciplineMapper,
+			ClassMapper classMapper,
 			AuthData authData,
 			FileMapper fileMapper,
 			FileService fileService) {
@@ -51,6 +61,8 @@ public class StudentService
 		
 		this.classroomRepository = classroomRepository;
 		this.schoolMapper = schoolMapper;
+		this.disciplineMapper = disciplineMapper;
+		this.classMapper = classMapper;
 	}
 	
 	@Transactional(readOnly = true)
@@ -61,6 +73,22 @@ public class StudentService
 			return Optional.of(schoolMapper.modelToDTO(school.get()));
 		
 		return Optional.empty();
+	}
+	
+	@Transactional(readOnly = true)
+	public List<DisciplineDTO> findDisciplinesById(Long id) {
+		return repository.findDisciplinesById(id)
+				.stream()
+				.map(x -> disciplineMapper.modelToDTO(x))
+				.collect(Collectors.toList());
+	}
+	
+	@Transactional(readOnly = true)
+	public List<ClassDTO> findClassesById(Long id) {
+		return repository.findClassesById(id)
+				.stream()
+				.map(x -> classMapper.modelToDTO(x))
+				.collect(Collectors.toList());
 	}
 	
 	@Override

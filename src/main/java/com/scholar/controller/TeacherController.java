@@ -20,8 +20,8 @@ import com.scholar.model.Teacher;
 import com.scholar.openapi.controller.TeacherControllerOpenApi;
 import com.scholar.request.FileRequest;
 import com.scholar.request.TeacherRequest;
-import com.scholar.security.permissions.CheckAdministrator;
 import com.scholar.security.permissions.CheckDirector;
+import com.scholar.security.permissions.CheckStudent;
 import com.scholar.security.permissions.CheckTeacher;
 import com.scholar.service.TeacherService;
 
@@ -41,7 +41,7 @@ public class TeacherController implements TeacherControllerOpenApi {
 	}
 	
 	@Override
-	@CheckAdministrator.ViewAllData
+	//@CheckAdministrator.ViewAllData
 	@GetMapping
 	public ResponseEntity<?> findAll() {
 		return base.findAll();
@@ -88,6 +88,12 @@ public class TeacherController implements TeacherControllerOpenApi {
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> deleteById(@PathVariable Long id) {
 		return base.deleteById(id);
+	}
+	
+	@CheckStudent.ViewData
+	@GetMapping("/{id}/classes")
+	public ResponseEntity<?> findClassessById(@PathVariable Long id) {
+		return base.findListById(service.findClassesById(id)); 
 	}
 
 }

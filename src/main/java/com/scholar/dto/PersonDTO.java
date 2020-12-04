@@ -28,7 +28,6 @@ public class PersonDTO {
 	private LocalDate birthDate;
 	private String cpf;
 	
-	@ToString.Exclude
 	private FileDTO file;
 	
 	@ToString.Exclude

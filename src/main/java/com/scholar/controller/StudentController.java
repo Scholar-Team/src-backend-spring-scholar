@@ -90,5 +90,17 @@ public class StudentController implements StudentControllerOpenApi {
 	public ResponseEntity<?> deleteById(@PathVariable Long id) {
 		return base.deleteById(id);
 	}
+	
+	@CheckStudent.ViewData
+	@GetMapping("/{id}/disciplines")
+	public ResponseEntity<?> findDisciplinesById(@PathVariable Long id) {
+		return base.findListById(service.findDisciplinesById(id)); 
+	}
+	
+	@CheckStudent.ViewData
+	@GetMapping("/{id}/classes")
+	public ResponseEntity<?> findClassessById(@PathVariable Long id) {
+		return base.findListById(service.findClassesById(id)); 
+	}
 
 }

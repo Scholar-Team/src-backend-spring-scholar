@@ -59,7 +59,7 @@ public class Person {
 	private String password;
 	
 	@ToString.Include
-	@Column(nullable = false)
+	@Column
 	private LocalDate birthDate;
 	
 	@ToString.Include

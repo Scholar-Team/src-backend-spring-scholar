@@ -54,7 +54,7 @@ public class SchoolController implements SchoolControllerOpenApi {
 	}
 
 	@Override
-	@CheckAdministrator.SaveData
+	//@CheckAdministrator.SaveData
 	@PostMapping
 	public ResponseEntity<?> save(
 			@RequestPart(name = "school", required = true) SchoolRequest request,

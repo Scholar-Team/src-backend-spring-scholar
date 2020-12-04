@@ -232,7 +232,7 @@ CREATE TABLE permission_role (
 
 CREATE TABLE person (
   id bigint(20) NOT NULL,
-  birth_date date NOT NULL,
+  birth_date date DEFAULT NULL,
   cpf varchar(255) NOT NULL,
   email varchar(255) NOT NULL,
   name varchar(255) NOT NULL,
